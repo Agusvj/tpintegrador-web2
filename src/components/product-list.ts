@@ -1,16 +1,12 @@
 import { LitElement, html, css, type PropertyDeclarations } from "lit";
-import { getProducts } from "../data/products.ts";
-class Product_List extends LitElement {
-  static styles = css`
-    @import "../style.css";
-  `;
-
-  constructor() {
-    super();
-  }
+import { customElement, property } from "lit/decorators.js";
+@customElement("product-list")
+export class Product_List extends LitElement {
   createRenderRoot() {
     return this;
   }
+
+  @property({ type: Array<Object> }) products = [];
 
   render() {
     return html`
@@ -132,4 +128,3 @@ class Product_List extends LitElement {
     `;
   }
 }
-customElements.define("product-list", Product_List);
