@@ -308,7 +308,7 @@ class Product_List extends LitElement {
                           </h3>
 
                           <p class="mt-2">
-                            <span class="sr-only"> Regular Price </span>
+                            <span class="sr-only" > Regular Price </span>
 
                             <span class="tracking-wider text-gray-900">
                               £24.00 GBP

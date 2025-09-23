@@ -39,10 +39,11 @@ class ProductCard extends LitElement{
                           </h3>
 
                           <p class="mt-2">
-                            ${this.description}
+                            
                             <span class="sr-only"> Regular Price </span>
                             <span class="tracking-wider text-gray-900">
                               ${this.price}
+                            <p>${this.description}</p>
                             </span>
                           </p>
                         </div>
@@ -55,6 +56,7 @@ class ProductCard extends LitElement{
         
         `
     }
+    customElements.define("product-card", ProductCard);
 
 
 
