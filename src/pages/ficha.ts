@@ -27,7 +27,7 @@ export class ProductPage extends LitElement {
     }
 
     if (!this.product) {
-      return html`<p class="p-4">⏳ Cargando producto...</p>`;
+      return html`<p class="p-4 text-center mt-5">⏳ Cargando producto...</p>`;
     }
 
     return html`
