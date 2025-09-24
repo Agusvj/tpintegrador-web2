@@ -15,8 +15,6 @@ export class HomePage extends LitElement {
   async connectedCallback() {
     super.connectedCallback();
     this.products = await getProducts();
-    console.log("holaaaaaaaaaa");
-    console.log(this.products);
   }
   render() {
     if (this.error) {
