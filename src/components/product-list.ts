@@ -4,7 +4,12 @@ class Product_List extends LitElement {
   static styles = css`
     @import "../style.css";
   `;
-
+  static properties = {
+    title: { type: String },
+    picture: { type: String },
+    description: { type: String },
+    price: { type: Number },
+  };
   constructor() {
     super();
   }
