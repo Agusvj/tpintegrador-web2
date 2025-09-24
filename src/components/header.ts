@@ -1,77 +1,33 @@
 import { LitElement, html } from "lit";
 import{customElement, state} from 'lit/decorators.js';
+import { getCategories } from "../data/categories";
+
 @customElement('app-header')
 export class Appheader extends LitElement {
     //estado reactivo:
     //define una propiedad interna reactiva (showMneu) que controla si el menu desplegable del usuario esta visible
     //cuando cambia el valor lit vueve a renderizar automaticamente el componente
  @state() private showMenu = false;
-
+ @state()categories: any=null;
+ 
   createRenderRoot() {
     return this; // Permite que Tailwind se aplique desde el DOM global
   }
-private renderDropdown() {
-  return html`
-    <div class=" hidden md:relative  md:block">
-      <button
-        type="button"
-        class="overflow-hidden rounded-full border border-gray-300 shadow-inner"
-        @click="${() => (this.showMenu = !this.showMenu)}"
-      >
-        <span class="sr-only">Toggle dashboard menu</span>
-       <p>"categorias</p>
-      </button>
+  async connectedCallback(){
+    super.connectedCallback();
+    this.categories = await getCategories();
+ console.log(this.categories);
+  }
+ 
 
-      ${this.showMenu
-        ? html`
-            <div
-              class="absolute left-0 z-10 mt-0.5 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
-              role="menu"
-            >
-              <div class="p-2">
-                ${['Carniceria', 'Vegetales', 'Lacteos', 'Congelados', 'Almacen'].map(
-                  item => html`
-                    <a
-                      href="#"
-                      class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
-                      role="menuitem"
-                    >
-                      ${item}
-                    </a>
-                  `
-                )}
-              </div>
-              <div class="p-2">
-                <form method="POST" action="#">
-                  <button
-                    type="submit"
-                    class="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
-                    role="menuitem"
-                  >
-                    <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-                    </svg>
-                    Mi Carrito
-                  </button>
-                </form>
-              </div>
-            </div>
-          `
-        : null}
-    </div>
-  `;
-}
   render() {
     return html`
    
-    <header class="bg-white">
+ <header class="bg-white">
   <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 items-center justify-between">
-     <div class="flex items-center gap-4">
-            
-             ${this.renderDropdown()}
-             </div>
       <div class="flex-1 md:flex md:items-center md:gap-12">
+     
         <a class="block text-teal-600" href="#">
           <span class="sr-only">Home</span>
           <svg class="h-8" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -83,37 +39,10 @@ private renderDropdown() {
         </a>
       </div>
 
-      <div class="md:flex md:items-center md:gap-12">
-        <nav aria-label="Global" class="hidden md:block">
-          <ul class="flex items-center gap-6 text-sm">
-            <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> About </a>
-            </li>
+      <div class="md:flex md:items-center md:gap-12"> 
+      ${this.renderDropdown()}
 
-            <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Careers </a>
-            </li>
-
-            <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> History </a>
-            </li>
-
-            <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Services </a>
-            </li>
-
-            <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Projects </a>
-            </li>
-
-            <li>
-              <a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Blog </a>
-            </li>
-          </ul>
-        </nav>
-
-       
-        <div class="block md:hidden">
+           <div class="block md:hidden">
           <button
             class="rounded-sm bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"
           >
@@ -133,6 +62,59 @@ private renderDropdown() {
     </div>
   </div>
 </header>
+
 `;
   }
+  private renderDropdown() {
+  return html`
+    <div class=" hidden md:relative  md:block">
+      <button
+        type="button"
+        class="overflow-hidden rounded-full border border-gray-300 shadow-inner"
+        @click="${() => (this.showMenu = !this.showMenu)}"
+      >
+        <span class="sr-only">Toggle dashboard menu</span>
+       <p>categorias</p>
+      </button>
+
+      ${this.showMenu
+        ? html`
+            <div
+              class="absolute end-0 z-10 mt-0.5 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
+              role="menu"
+            >
+              <div class="p-2">
+                ${this.categories.map(
+            (cat:any) => html`
+                    <a
+                      href="http://localhost:5173/listado.html?category-id=${cat.id}"
+                      class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                      
+                    >
+                      ${cat.title}
+
+                    </a>
+                  `
+                )}
+              </div>
+              <div class="p-2">
+                <form method="POST" action="#">
+                  <button
+                    type="submit"
+                    class="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
+                    role="menuitem"
+                  >
+                    <svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                    </svg>
+                    Logout
+                  </button>
+                </form>
+              </div>
+            </div>
+          `
+        : null}
+    </div>
+  `;
+}
   }
