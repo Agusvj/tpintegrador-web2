@@ -1,5 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { property } from "lit/decorators.js";
+import type { Product } from "../data/products";
 //los decoradores son opcionales, como @customElements
 
 export class ProductCard extends LitElement {
@@ -8,6 +9,7 @@ export class ProductCard extends LitElement {
   @property({ type: String }) description = "";
   @property({ type: Number }) price = 0;
 
+  @property({ type: Array }) products: Product[] = [];
   static styles = css`
     @import "./style.css";
   `;
