@@ -14,7 +14,7 @@ async function getCategories(): Promise<Object[]> {
   }
 }
 
-async function getCategorieByID(id: string): Promise<Object[]> {
+async function getCategorieByID(id: number): Promise<Object[]> {
   try {
     const res = await fetch(`http://161.35.104.211:8000/categories/${id}`, {
       headers: {

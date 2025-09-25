@@ -33,4 +33,10 @@ async function getProductByID(id: number): Promise<Object[]> {
     throw error;
   }
 }
+export interface Product {
+  title: string;
+  pictures: string[];
+  price: number;
+  description: string;
+}
 export { getProducts, getProductByID };
