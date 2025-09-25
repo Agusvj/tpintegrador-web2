@@ -38,5 +38,6 @@ export interface Product {
   pictures: string[];
   price: number;
   description: string;
+  id: string;
 }
 export { getProducts, getProductByID };

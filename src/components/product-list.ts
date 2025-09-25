@@ -9,9 +9,14 @@ export class Product_List extends LitElement {
   }
 
   @property({ type: Array }) products: Product[] = [];
+  @property({ type: Number }) cat_id = "all";
 
   render() {
-    return html`
+    const params = new URLSearchParams(window.location.search);
+    const categoria = params.get("cat");
+    this.cat_id = categoria;
+    if ((this.cat_id = "")) {
+      return html`
       <section>
         <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           <header>
@@ -19,7 +24,8 @@ export class Product_List extends LitElement {
               Productos
             </h2>
           </header>
-          <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ul class="mt-8 grid gap-4 sm:grid-cols-2 p lg:grid-cols-6 ">
+          
           ${this.products.map((producto: Product) => {
             return html`
         
@@ -38,5 +44,38 @@ export class Product_List extends LitElement {
         </div>
       </section>
     `;
+    } else {
+      const filteredProducts = this.products.filter((prod) => {
+        this.cat_id === prod.id;
+      });
+      return html`
+      <section>
+        <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+          <header>
+            <h2 class="text-xl font-bold text-gray-900 sm:text-3xl">
+              Productos
+            </h2>
+          </header>
+          <ul class="mt-8 grid gap-4 sm:grid-cols-2 p lg:grid-cols-6 ">
+          
+          ${filteredProducts.map((producto: Product) => {
+            return html`
+        
+          ${console.log(producto)}
+                <product-card
+                  .title="${producto.title}"
+                  .picture="http://161.35.104.211:8000${producto.pictures[0]}"
+                  .price="$${producto.price * 1000}"
+                  .description="${producto.description}"
+                ></product-card>
+              </ul>
+            </div>
+          </section>
+        `;
+          })}
+        </div>
+      </section>
+    `;
+    }
   }
 }
