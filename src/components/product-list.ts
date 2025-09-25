@@ -1,5 +1,5 @@
 import { LitElement, html, type PropertyDeclarations } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement, property, state } from "lit/decorators.js";
 import { ProductCard } from "./product-card";
 import type { Product } from "../data/products";
 @customElement("product-list")
@@ -9,13 +9,14 @@ export class Product_List extends LitElement {
   }
 
   @property({ type: Array }) products: Product[] = [];
-  @property({ type: Number }) cat_id = "all";
+  @state() cat_id = "";
 
   render() {
     const params = new URLSearchParams(window.location.search);
-    const categoria = params.get("cat");
+    const categoria = params.get("cat") ?? "";
     this.cat_id = categoria;
-    if ((this.cat_id = "")) {
+    console.log(this.cat_id);
+    if (this.cat_id == "") {
       return html`
       <section>
         <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
@@ -46,8 +47,10 @@ export class Product_List extends LitElement {
     `;
     } else {
       const filteredProducts = this.products.filter((prod) => {
-        this.cat_id === prod.id;
+        console.log(this.cat_id, prod.category_id);
+        return this.cat_id == prod.category_id;
       });
+
       return html`
       <section>
         <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">

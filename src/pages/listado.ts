@@ -1,5 +1,6 @@
 import "../components/product-list";
 import { getCategorieByID, getCategories } from "../data/categories.ts";
+import { getProducts } from "../data/products.ts";
 import { customElement, property, state } from "lit/decorators.js";
 import { LitElement, html } from "lit";
 import { Categories_List } from "../components/categories-list.ts";
@@ -7,6 +8,7 @@ import { Categories_List } from "../components/categories-list.ts";
 @customElement("list-page")
 export class Listado extends LitElement {
   @state() categories: Array<Object> = [];
+  @state() products: Array<Object> = [];
   @state() error: string | null = null;
 
   createRenderRoot() {
@@ -16,6 +18,7 @@ export class Listado extends LitElement {
   async connectedCallback() {
     super.connectedCallback();
     this.categories = await getCategories();
+    this.products = await getProducts();
   }
   render() {
     if (this.error) {
@@ -26,8 +29,9 @@ export class Listado extends LitElement {
     }
 
     return html`
-      <div class=" flex  flex-wrap items-center justify-center">
+      <div class=" flex  flex-wrap items-center justify-center ">
         <cat-list .categorias=${this.categories}></cat-list>
+        <product-list .products=${this.products}> </product-list>
       </div>
     `;
   }
