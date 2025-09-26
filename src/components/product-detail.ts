@@ -25,7 +25,10 @@ export class ProductDetail extends LitElement {
             >
               <li>
                 <div class="flex items-center">
-                  <a href="#" class="mr-2 text-sm font-medium text-gray-900"
+                  <a
+                    href="http://localhost:5173/listado.html?category-id=${this
+                      .category.id}"
+                    class="mr-2 text-sm font-medium text-gray-900"
                     >${this.category.title}</a
                   >
                   <svg

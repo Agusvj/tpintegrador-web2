@@ -15,10 +15,10 @@ export class ProductPage extends LitElement {
   async connectedCallback() {
     super.connectedCallback();
     const params = new URLSearchParams(window.location.search);
-    console.log(params);
 
-    this.product = await getProductByID(162);
-    console.log(this.product);
+    let productId = params.get("product-id");
+
+    this.product = await getProductByID(Number(productId));
   }
 
   render() {
@@ -34,6 +34,7 @@ export class ProductPage extends LitElement {
 
     return html`
       <main class="flex flex-col items-center">
+        <app-header></app-header>
         <product-detail
           .title=${this.product.title}
           .description=${this.product.description}
