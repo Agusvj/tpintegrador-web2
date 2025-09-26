@@ -21,9 +21,11 @@ export class Appheader extends LitElement {
 
   render() {
     return html`
-      <header class="bg-white">
-        <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div class="flex h-16 items-center justify-between">
+      <header class="bg-white fixed w-full top-0 left-0 z-50">
+        <div
+          class="py-2 mx-auto max-w-screen-xl px-4 md:mr-30 md:ml-30  sm:px-6 lg:px-8"
+        >
+          <div class="flex h-20 items-center justify-between">
             <div class="flex-1 md:flex md:items-center md:gap-12">
               <a class="block text-teal-600" href="#">
                 <span class="sr-only">Home</span>
@@ -40,10 +42,9 @@ export class Appheader extends LitElement {
                 </svg>
               </a>
             </div>
-
-            <div class="md:flex md:items-center md:gap-12">
+            <div class="flex md:items-center md:gap-4 ">
               ${this.renderDropdown()}
-
+              <carrito-comp></carrito-comp>
               <div class="block md:hidden">
                 <button
                   class="rounded-sm bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"
@@ -75,11 +76,27 @@ export class Appheader extends LitElement {
       <div class=" hidden md:relative  md:block">
         <button
           type="button"
-          class="overflow-hidden rounded-full border border-gray-300 shadow-inner"
+          class="overflow-hidden hover:bg-gray-100 rounded-sm bg-transparent py-1 px-2  cursor-pointer"
           @click="${() => (this.showMenu = !this.showMenu)}"
         >
-          <span class="sr-only">Toggle dashboard menu</span>
-          <p>categorias</p>
+          <div class="flex items-center gap-1 text-md font-bold">
+            <span class="sr-only">Toggle dashboard menu</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="size-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+            <p>Categorias</p>
+          </div>
         </button>
 
         ${this.showMenu
@@ -88,41 +105,20 @@ export class Appheader extends LitElement {
                 class="absolute end-0 z-10 mt-0.5 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
                 role="menu"
               >
-                <div class="p-2">
+                <div>
                   ${this.categories.map(
                     (cat: any) => html`
                       <a
                         href="http://localhost:5173/listado.html?category-id=${cat.id}"
-                        class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                        class="block  py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-700"
                       >
-                        ${cat.title}
+                        <div class="flex justify-between items-center mr-6">
+                          <span>< </span>
+                          <span> ${cat.title}</span>
+                        </div>
                       </a>
                     `
                   )}
-                </div>
-                <div class="p-2">
-                  <form method="POST" action="#">
-                    <button
-                      type="submit"
-                      class="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
-                      role="menuitem"
-                    >
-                      <svg
-                        class="size-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="1.5"
-                          d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
-                        />
-                      </svg>
-                      Logout
-                    </button>
-                  </form>
                 </div>
               </div>
             `

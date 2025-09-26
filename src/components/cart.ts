@@ -12,7 +12,7 @@ class Carrito extends LitElement {
   }
   render() {
     return html`
-      <div class=" fixed z-10">
+      <div>
         <img
           src="src/svg/cart.svg"
           class="h-10 shadow-lg bg-blue-500 p-1 rounded-xl"
