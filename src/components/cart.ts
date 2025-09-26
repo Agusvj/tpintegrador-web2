@@ -1,22 +1,91 @@
 import { LitElement, html, css } from "lit";
+import { customElement, state } from "lit/decorators.js";
 
-class Carrito extends LitElement {
-  static styles = css`
-    @import "../style.css";
-  `;
-  constructor() {
-    super();
-  }
+@customElement("carrito-comp")
+export class Carrito extends LitElement {
   createRenderRoot() {
     return this;
   }
+  @state() isOpen = false;
+  @state() cantTotal = 0;
+  @state() productos = [];
+
+  private toggleSideBar() {
+    this.isOpen = !this.isOpen;
+  }
   render() {
     return html`
-      <div>
-        <img
-          src="src/svg/cart.svg"
-          class="h-10 shadow-lg bg-blue-500 p-1 rounded-xl"
-        />
+      <div class="z-51 justify-end fixed">
+        <button @click=${this.toggleSideBar} class=" cursor-pointer m-6">
+          <img
+            src="src/svg/cart.svg"
+            class="h-12 shadow-lg bg-blue-500 hover:shadow-blue-600/50 hover:scale-110 hover:-rotate-4 p-1  transition duration-200 rounded-xl"
+          />
+          <p class="absolute top-1 right-1">${this.cantTotal}</p>
+        </button>
+      </div>
+      <div
+        class=" fixed w-screen max-w-sm  border border-gray-600 z-51 bg-gray-100 px-4 py-8 sm:px-6 lg:px-8 transform transition-transform duration-300 ease-in-out ${this
+          .isOpen
+          ? "translate-x-0"
+          : "translate-x-[100%]"}"
+        aria-modal="true"
+        role="dialog"
+        tabindex="-1"
+      >
+        <button
+          @click=${this.toggleSideBar}
+          class="absolute end-4 top-4 text-gray-600 transition-all hover:scale-110  cursor-pointer"
+        >
+          <span class="sr-only">Close cart</span>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+
+        <div class="mt-4 space-y-6">
+          <ul class="space-y-4">
+            <li class="flex items-center gap-4">
+              <img
+                src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=830&q=80"
+                alt=""
+                class="size-16 rounded-sm object-cover"
+              />
+
+              <div>
+                <h3 class="text-sm text-gray-900">NOMBRE PRODUCTO</h3>
+
+                <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
+                  <div>
+                    <p>PRECIO</p>
+                    <p>CANTIDAD</p>
+                  </div>
+                </dl>
+              </div>
+            </li>
+          </ul>
+
+          <div class="space-y-4 text-center">
+            <a
+              href="#"
+              class="block rounded-sm bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600"
+            >
+              Checkout
+            </a>
+          </div>
+        </div>
       </div>
     `;
   }
@@ -29,5 +98,3 @@ class Carrito extends LitElement {
     `;
   }
 }
-
-customElements.define("carrito-comp", Carrito);

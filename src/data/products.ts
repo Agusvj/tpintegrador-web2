@@ -38,10 +38,7 @@ export interface Product {
   pictures: string[];
   price: number;
   description: string;
-<<<<<<< HEAD
-  id: number;
-=======
+  id: string;
   category_id: string;
->>>>>>> categories-list
 }
 export { getProducts, getProductByID };
