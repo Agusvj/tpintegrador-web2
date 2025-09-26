@@ -26,7 +26,7 @@ export class ProductCard extends LitElement {
 
   render() {
     return html`
-      <li>
+      <li >
         <a href="#" class="group block overflow-hidden">
           <img
             src="${this.picture}"
@@ -46,13 +46,18 @@ export class ProductCard extends LitElement {
               <span class="tracking-wider text-gray-900">
                 ${this.price}
                 </span >
-                <p class ="flex grow-0 absolute ">${this.description}</p>
+              </div>
+              <div class="mt-2 flex flex-col gap-6  items-start h-15">
+                <p class ="flex-grow  ">${this.description}</p>
             </div>
           </div>
-        </a>
-                <a class =" self-end" href="http://localhost:5173/ficha.html?category-id=${this.productId}">Ver mas</a>
-              <a
-              class="mt-auto self-end inline-block rounded-full border border-indigo-600 p-3 text-indigo-600 hover:bg-indigo-300 hover:text-white focus:ring-3 focus:outline-hidden"
+        </a> 
+          <div class="mt-2 flex flex-row gap-4  m-3 items-center">
+                <a class ="flex-1 text-grow " href="http://localhost:5173/ficha.html?category-id=${this.productId}">Ver mas</a>
+             
+              
+                <a
+              class=" inline-flex items-center  rounded-full border border-indigo-600 p-3  text-indigo-600 hover:bg-indigo-300 hover:text-white focus:ring-3 focus:outline-hidden"
               href="#"
               >
               <span class="sr-only"> Download </span>
@@ -68,7 +73,7 @@ export class ProductCard extends LitElement {
               </g>
             </svg>
               </a>
-           
+           </div>
       </li>
     `;
   }
