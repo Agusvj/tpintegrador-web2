@@ -1,6 +1,7 @@
 import { LitElement, html, css } from "lit";
 import { property } from "lit/decorators.js";
 import type { Product } from "../data/products";
+import type { Carrito } from "./cart";
 //los decoradores son opcionales, como @customElements
 
 export class ProductCard extends LitElement {
@@ -42,7 +43,7 @@ export class ProductCard extends LitElement {
 
             <div class="mt-2 flex flex-col gap-6  items-start">
               <span class="sr-only"> Regular Price </span>
-              <span class="tracking-wider text-gray-900"> ${this.price} </span>
+              <span class="tracking-wider text-gray-900">$ ${this.price} </span>
             </div>
             <div class="mt-2 flex flex-col gap-6  items-start h-15">
               <p class="flex-grow  ">${this.description}</p>
@@ -58,8 +59,8 @@ export class ProductCard extends LitElement {
           >
 
           <a
-            class=" inline-flex items-center  rounded-full border border-indigo-600 p-3  text-indigo-600 hover:bg-indigo-300 hover:text-white focus:ring-3 focus:outline-hidden"
-            href="#"
+            @click=${this.addToCart}
+            class=" inline-flex items-center  rounded-full border border-indigo-600 p-3  text-indigo-600 hover:bg-indigo-300 hover:text-white focus:ring-3 focus:outline-hidden cursor-pointer"
           >
             <span class="sr-only"> Download </span>
 
@@ -98,6 +99,20 @@ export class ProductCard extends LitElement {
         </div>
       </li>
     `;
+  }
+  private addToCart() {
+    this.dispatchEvent(
+      new CustomEvent("add-to-cart", {
+        detail: {
+          id: this.productId,
+          name: this.title,
+          price: this.price,
+          picture: this.picture,
+        },
+        bubbles: true, // <-- importante para que suba en el DOM
+        composed: true,
+      })
+    );
   }
 }
 customElements.define("product-card", ProductCard);
