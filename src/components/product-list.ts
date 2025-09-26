@@ -29,6 +29,7 @@ export class Product_List extends LitElement {
                   .picture="http://161.35.104.211:8000${producto.pictures[0]}"
                   .price="$${producto.price * 1000}"
                   .description="${producto.description}"
+                   .productId=${producto.id}
                 ></product-card>
               </ul>
             </div>
