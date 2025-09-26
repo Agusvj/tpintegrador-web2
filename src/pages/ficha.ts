@@ -23,11 +23,13 @@ export class ProductPage extends LitElement {
 
   render() {
     if (this.error) {
-      return html`<p class="p-4 text-red-500">${this.error}</p>`;
+      return html`<p class="p-4 text-red-500 text-center mt-5">
+        ${this.error}
+      </p>`;
     }
 
     if (!this.product) {
-      return html`<p class="p-4">⏳ Cargando producto...</p>`;
+      return html`<p class="p-4 text-center mt-5">⏳ Cargando producto...</p>`;
     }
 
     return html`
