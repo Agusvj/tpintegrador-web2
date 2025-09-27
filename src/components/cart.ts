@@ -21,30 +21,60 @@ export class Carrito extends LitElement {
     this.isOpen = !this.isOpen;
   }
   private addItem(item: CartItem) {
-    // Ver si ya existe el producto
-
     const existing = this.productos.find((i) => i.id === item.id);
     if (existing) {
-      // Incrementar cantidad
       this.productos = this.productos.map((i) =>
         i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
       );
       this.cantTotal = this.cantTotal + 1;
+      localStorage.setItem("carrito", JSON.stringify(this.productos));
+      localStorage.setItem("cant_total", this.cantTotal.toString());
     } else {
       // Agregar nuevo
       this.productos = [...this.productos, { ...item, quantity: 1 }];
       this.cantTotal = this.cantTotal + 1;
+      localStorage.setItem("carrito", JSON.stringify(this.productos));
+      localStorage.setItem("cant_total", this.cantTotal.toString());
     }
+  }
+  private removeItem(item: CartItem) {
+    const index = this.productos.findIndex((p) => p.id === item.id);
+    const product = this.productos[index];
+
+    if (product.quantity > 1) {
+      this.productos[index] = {
+        ...product,
+        quantity: product.quantity - 1,
+      };
+    } else {
+      this.productos.splice(index, 1);
+    }
+
+    this.cantTotal = this.cantTotal - 1;
+
+    localStorage.setItem("carrito", JSON.stringify(this.productos));
+    localStorage.setItem("cant_total", this.cantTotal.toString());
   }
   handleAddToCart(e: Event) {
     const detail = (e as CustomEvent).detail;
 
     this.addItem({ ...detail });
   }
+  vaciarCarrito() {
+    this.productos = [];
+    this.cantTotal = 0;
+    localStorage.setItem("carrito", "");
+    localStorage.setItem("cant_total", "");
+  }
   /* private boundHandleAddToCart = this.handleAddToCart.bind(this); */
   connectedCallback(): void {
     super.connectedCallback();
     window.addEventListener("add-to-cart", this.handleAddToCart.bind(this));
+    this.productos = JSON.parse(
+      localStorage.getItem("carrito") || "[]"
+    ) as CartItem[];
+    const cantidad = localStorage.getItem("cant_total");
+    this.cantTotal = cantidad ? parseInt(cantidad) : 0;
   }
   disconnectedCallback() {
     // Remove the listener when the component is removed from the DOM
@@ -99,7 +129,7 @@ export class Carrito extends LitElement {
           </svg>
         </button>
 
-        <div class="mt-4 space-y-6 flex flex-col ">
+        <div class="mt-4 space-y-6 flex flex-col  ">
           ${this.productos.map(
             (item) => html`
               <li class="list-none   flex flex-row ">
@@ -115,18 +145,53 @@ export class Carrito extends LitElement {
                   <p class="font-bold text-green-500">
                     $${item.price * item.quantity}
                   </p>
+                  <div class="flex  px-4 gap-2">
+                    <button
+                      @click=${() =>
+                        this.addItem({
+                          id: item.id,
+                          name: item.name,
+                          price: item.price,
+                          picture: item.picture,
+                          quantity: item.quantity,
+                        } as CartItem)}
+                      class="font-bold  inline-flex items-center  justify-center bg-blue-500 rounded-full h-5 w-5  text-center cursor-pointer transition-all hover:scale-110 "
+                    >
+                      +
+                    </button>
+                    <button
+                      @click=${() =>
+                        this.removeItem({
+                          id: item.id,
+                          name: item.name,
+                          price: item.price,
+                          picture: item.picture,
+                          quantity: item.quantity,
+                        } as CartItem)}
+                      class="font-bold  inline-flex items-center  justify-center bg-blue-500 rounded-full h-5 w-5  text-center cursor-pointer  transition-all hover:scale-110 "
+                    >
+                      -
+                    </button>
+                  </div>
                 </div>
               </li>
             `
           )}
 
-          <div class="space-y-4 text-center">
-            <a
+          <div class="space-y-4 text-center ">
+            <button
               href="#"
-              class="block rounded-sm bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600"
+              class=" inline rounded-sm bg-green-500 px-5 py-3 text-sm text-gray-100 transition  hover:bg-green-600 cursor-pointer"
             >
-              Checkout
-            </a>
+              Finalizar Compra
+            </button>
+            <button
+              @click=${this.vaciarCarrito}
+              href="#"
+              class="inline rounded-sm bg-red-500 px-5 py-3 text-sm text-gray-100 transition  hover:bg-red-600 cursor-pointer"
+            >
+              Vaciar Carrito
+            </button>
           </div>
         </div>
       </div>
