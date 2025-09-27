@@ -15,7 +15,6 @@ export class Product_List extends LitElement {
     const params = new URLSearchParams(window.location.search);
     const categoria = params.get("cat") ?? "";
     this.cat_id = categoria;
-    console.log(this.cat_id);
     if (this.cat_id == "") {
       return html`
       <section>

@@ -33,8 +33,8 @@ export class ProductPage extends LitElement {
     }
 
     return html`
+      <app-header></app-header>
       <main class="flex flex-col items-center">
-        <app-header></app-header>
         <product-detail
           .title=${this.product.title}
           .description=${this.product.description}
