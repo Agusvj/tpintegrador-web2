@@ -13,6 +13,21 @@ export class ProductDetail extends LitElement {
   @property({ type: Array }) pictures: string[] = [];
   @property({ type: Array }) tags: Array<{ title: string }> = [];
   @property({ type: Object }) category: any = null;
+  @property({ type: Number }) productId = 0;
+  private addToCart() {
+    this.dispatchEvent(
+      new CustomEvent("add-to-cart", {
+        detail: {
+          id: this.productId,
+          name: this.title,
+          price: this.price,
+          picture: this.pictures,
+        },
+        bubbles: true, // <-- importante para que suba en el DOM
+        composed: true,
+      })
+    );
+  }
 
   render() {
     return html`
@@ -127,30 +142,28 @@ export class ProductDetail extends LitElement {
                 $${this.price * 1000}
               </p>
 
-              <form class="mt-10">
-                <div>
-                  <h3 class="text-sm font-medium text-gray-900 mb-3">
-                    Etiquetas
-                  </h3>
+              <div>
+                <h3 class="text-sm font-medium text-gray-900 mb-3">
+                  Etiquetas
+                </h3>
 
-                  ${this.tags.map(
-                    (tag) => html`
-                      <span
-                        class="bg-yellow-400 px-3 py-1.5 text-xs font-medium whitespace-nowrap mr-1"
-                      >
-                        ${tag.title}
-                      </span>
-                    `
-                  )}
-                </div>
+                ${this.tags.map(
+                  (tag) => html`
+                    <span
+                      class="bg-yellow-400 px-3 py-1.5 text-xs font-medium whitespace-nowrap mr-1"
+                    >
+                      ${tag.title}
+                    </span>
+                  `
+                )}
+              </div>
 
-                <button
-                  type="submit"
-                  class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
-                >
-                  Agregar al Carrito
-                </button>
-              </form>
+              <button
+                @click=${this.addToCart}
+                class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
+              >
+                Agregar al Carrito
+              </button>
             </div>
 
             <div
