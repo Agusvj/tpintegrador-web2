@@ -52,8 +52,7 @@ export class ProductCard extends LitElement {
         <div class="mt-2 flex flex-row gap-4  m-3 items-center">
           <a
             class="flex-1 text-grow "
-            href="http://localhost:5173/ficha.html?category-id=${this
-              .productId}"
+            href="http://localhost:5173/ficha.html?product-id=${this.productId}"
             >Ver mas</a
           >
 
