@@ -18,11 +18,28 @@ export class Appheader extends LitElement {
     super.connectedCallback();
     this.categories = await getCategories();
     document.addEventListener("click", this.handleClickOutside);
+
+    window.addEventListener(
+      "cart-count-changed",
+      this.handleCartCountChanged as EventListener
+    );
+    window.addEventListener(
+      "cart-close",
+      this.handleCartClose as EventListener
+    );
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     document.removeEventListener("click", this.handleClickOutside);
+    window.removeEventListener(
+      "cart-count-changed",
+      this.handleCartCountChanged as EventListener
+    );
+    window.removeEventListener(
+      "cart-close",
+      this.handleCartClose as EventListener
+    );
   }
 
   private handleClickOutside = (e: MouseEvent) => {
@@ -34,16 +51,20 @@ export class Appheader extends LitElement {
 
   private openCart = () => {
     this.cartOpen = true;
-    // Optionally, you can dispatch an event to carrito-comp if needed
-    const cartComp = document.querySelector("carrito-comp");
-    if (cartComp) {
-      (cartComp as any).isOpen = true;
-    }
+    window.dispatchEvent(new CustomEvent("cart-open"));
+  };
+
+  private handleCartCountChanged = (e: CustomEvent) => {
+    this.cartCount = e.detail.count;
+  };
+
+  private handleCartClose = () => {
+    this.cartOpen = false;
   };
 
   render() {
     return html`
-      <header class="bg-white relative">
+      <header class="bg-white sticky top-0 z-50">
         <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div class="flex h-16 items-center justify-between">
             <!-- Logo -->
@@ -125,7 +146,7 @@ export class Appheader extends LitElement {
               </div>
 
               <!-- Carrito Button (triggers modal) -->
-              <button class="relative" @click=${this.openCart}>
+              <button class="relative cursor-pointer" @click=${this.openCart}>
                 <img
                   src="src/svg/cart.svg"
                   alt="Cart"
@@ -165,7 +186,7 @@ export class Appheader extends LitElement {
       </header>
 
       <!-- Carrito Modal (outside header for modal effect) -->
-      <carrito-comp style="z-index:9999;"></carrito-comp>
+      <carrito-comp .open=${this.cartOpen}></carrito-comp>
     `;
   }
 }

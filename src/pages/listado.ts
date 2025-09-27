@@ -3,7 +3,7 @@ import { getCategorieByID, getCategories } from "../data/categories.ts";
 import { getProducts } from "../data/products.ts";
 import { customElement, property, state } from "lit/decorators.js";
 import { LitElement, html } from "lit";
-import { Categories_List } from "../components/categories-list.ts";
+import "../components/categories-list.ts";
 
 @customElement("list-page")
 export class Listado extends LitElement {

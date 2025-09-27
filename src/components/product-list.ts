@@ -1,6 +1,6 @@
 import { LitElement, html, type PropertyDeclarations } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { ProductCard } from "./product-card";
+import "./product-card";
 import type { Product } from "../data/products";
 @customElement("product-list")
 export class Product_List extends LitElement {
