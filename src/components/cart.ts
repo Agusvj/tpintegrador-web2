@@ -19,6 +19,9 @@ export class Carrito extends LitElement {
   @state() cantTotal = 0;
   @state() productos: CartItem[] = [];
 
+  // Handler referenciado correctamente
+  private addToCartHandler = this.handleAddToCart.bind(this);
+
   private addItem(item: CartItem) {
     const existing = this.productos.find((i) => i.id === item.id);
     if (existing) {
@@ -70,8 +73,8 @@ export class Carrito extends LitElement {
   vaciarCarrito() {
     this.productos = [];
     this.cantTotal = 0;
-    localStorage.setItem("carrito", "");
-    localStorage.setItem("cant_total", "");
+    localStorage.setItem("carrito", JSON.stringify([]));
+    localStorage.setItem("cant_total", "0");
     window.dispatchEvent(
       new CustomEvent("cart-count-changed", { detail: { count: 0 } })
     );
@@ -85,7 +88,7 @@ export class Carrito extends LitElement {
   }
   connectedCallback(): void {
     super.connectedCallback();
-    window.addEventListener("add-to-cart", this.handleAddToCart.bind(this));
+    window.addEventListener("add-to-cart", this.addToCartHandler);
     window.addEventListener("cart-open", this.handleCartOpen);
     this.productos = JSON.parse(
       localStorage.getItem("carrito") || "[]"
@@ -100,7 +103,7 @@ export class Carrito extends LitElement {
   }
 
   disconnectedCallback() {
-    window.removeEventListener("add-to-cart", this.handleAddToCart.bind(this));
+    window.removeEventListener("add-to-cart", this.addToCartHandler);
     window.removeEventListener("cart-open", this.handleCartOpen);
     super.disconnectedCallback();
   }
