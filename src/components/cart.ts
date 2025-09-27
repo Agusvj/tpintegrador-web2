@@ -76,7 +76,13 @@ export class Carrito extends LitElement {
       new CustomEvent("cart-count-changed", { detail: { count: 0 } })
     );
   }
-
+  calcValorTotal(): number {
+    let valorTotal: number = 0;
+    this.productos.forEach(
+      (p) => (valorTotal = valorTotal + p.price * p.quantity)
+    );
+    return valorTotal;
+  }
   connectedCallback(): void {
     super.connectedCallback();
     window.addEventListener("add-to-cart", this.handleAddToCart.bind(this));
@@ -144,21 +150,23 @@ export class Carrito extends LitElement {
               </svg>
             </button>
 
-            <div class="mt-4 space-y-6 flex flex-col">
+            <div class="mt-4 space-y-6 flex flex-col  ">
               ${this.productos.map(
                 (item) => html`
-                  <li class="list-none flex flex-row">
+                  <li class="list-none   flex flex-row ">
                     <img
                       src="${item.picture}"
                       class="h-15 flex align-middle shadow-2xs rounded-full"
                     />
-                    <div class="self-center flex flex-row">
+                    <div class="self-center  flex flex-row">
                       <p class="px-2">${item.name}</p>
-                      <p class="px-2 font-bold">X${item.quantity}</p>
+
+                      <p class="px-2 font-bold ">X${item.quantity}</p>
+
                       <p class="font-bold text-green-500">
                         $${item.price * item.quantity}
                       </p>
-                      <div class="flex px-4 gap-2">
+                      <div class="flex  px-4 gap-2">
                         <button
                           @click=${() =>
                             this.addItem({
@@ -168,7 +176,7 @@ export class Carrito extends LitElement {
                               picture: item.picture,
                               quantity: item.quantity,
                             } as CartItem)}
-                          class="font-bold inline-flex items-center justify-center bg-blue-500 rounded-full h-5 w-5 text-center cursor-pointer transition-all hover:scale-110"
+                          class="font-bold  inline-flex items-center  justify-center bg-blue-500 rounded-full h-5 w-5  text-center cursor-pointer transition-all hover:scale-110 "
                         >
                           +
                         </button>
@@ -181,7 +189,7 @@ export class Carrito extends LitElement {
                               picture: item.picture,
                               quantity: item.quantity,
                             } as CartItem)}
-                          class="font-bold inline-flex items-center justify-center bg-blue-500 rounded-full h-5 w-5 text-center cursor-pointer transition-all hover:scale-110"
+                          class="font-bold  inline-flex items-center  justify-center bg-blue-500 rounded-full h-5 w-5  text-center cursor-pointer  transition-all hover:scale-110 "
                         >
                           -
                         </button>
@@ -190,6 +198,13 @@ export class Carrito extends LitElement {
                   </li>
                 `
               )}
+              <div>
+                <span class="font-bold"
+                  >Valor Total:<span class="text-green-500 font-bold">
+                    $${this.calcValorTotal()}</span
+                  ></span
+                >
+              </div>
 
               <div class="space-y-4 text-center">
                 <button
