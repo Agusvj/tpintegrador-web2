@@ -20,7 +20,7 @@ export class ProductDetail extends LitElement {
         detail: {
           id: this.productId,
           name: this.title,
-          price: this.price,
+          price: this.price * 1000,
           picture: this.pictures,
         },
         bubbles: true, // <-- importante para que suba en el DOM
