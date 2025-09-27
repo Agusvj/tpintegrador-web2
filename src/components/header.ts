@@ -44,7 +44,7 @@ export class Appheader extends LitElement {
             </div>
             <div class="flex md:items-center md:gap-4 ">
               ${this.renderDropdown()}
-              <carrito-comp></carrito-comp>
+
               <div class="block md:hidden">
                 <button
                   class="rounded-sm bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"
@@ -109,7 +109,7 @@ export class Appheader extends LitElement {
                   ${this.categories.map(
                     (cat: any) => html`
                       <a
-                        href="http://localhost:5173/listado.html?category-id=${cat.id}"
+                        href="http://localhost:5173/listado.html?cat=${cat.id}"
                         class="block  py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-700"
                       >
                         <div class="flex justify-between items-center mr-6">

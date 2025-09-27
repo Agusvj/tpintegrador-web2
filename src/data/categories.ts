@@ -29,4 +29,10 @@ async function getCategorieByID(id: number): Promise<Object[]> {
     throw error;
   }
 }
+export interface Categorie {
+  title: string;
+  description: string;
+  id: number;
+  picture: string;
+}
 export { getCategories, getCategorieByID };
