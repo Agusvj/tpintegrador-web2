@@ -66,6 +66,13 @@ export class Carrito extends LitElement {
     localStorage.setItem("carrito", "");
     localStorage.setItem("cant_total", "");
   }
+  calcValorTotal(): number {
+    let valorTotal: number = 0;
+    this.productos.forEach(
+      (p) => (valorTotal = valorTotal + p.price * p.quantity)
+    );
+    return valorTotal;
+  }
   /* private boundHandleAddToCart = this.handleAddToCart.bind(this); */
   connectedCallback(): void {
     super.connectedCallback();
@@ -81,6 +88,7 @@ export class Carrito extends LitElement {
     window.removeEventListener("add-to-cart", this.handleAddToCart.bind(this));
     super.disconnectedCallback();
   }
+  renderProducts() {}
   render() {
     return html`
       <div
@@ -177,6 +185,13 @@ export class Carrito extends LitElement {
               </li>
             `
           )}
+          <div>
+            <span class="font-bold"
+              >Valor Total:<span class="text-green-500 font-bold">
+                $${this.calcValorTotal()}</span
+              ></span
+            >
+          </div>
 
           <div class="space-y-4 text-center ">
             <button
