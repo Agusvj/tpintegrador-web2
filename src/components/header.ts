@@ -10,6 +10,10 @@ export class Appheader extends LitElement {
   @state() private showMenu = false;
   @state() categories: any = null;
 
+ private toggleMenu() {
+  this.showMenu = !this.showMenu;
+}
+
   createRenderRoot() {
     return this; // Permite que Tailwind se aplique desde el DOM global
   }
@@ -42,64 +46,57 @@ export class Appheader extends LitElement {
                 </svg>
               </a>
             </div>
-            <div class="flex md:items-center md:gap-4 ">
-              ${this.renderDropdown()}
-
-              <div class="block md:hidden">
-                <button
-                  class="rounded-sm bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="size-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
+            <div class="flex md:items-center md:gap-4 "> 
+                <div class=" hidden md:relative  md:block">
+                      <button
+                            type="button"
+                              class="overflow-hidden hover:bg-gray-100 rounded-sm bg-transparent py-1 px-2  cursor-pointer"
+                              @click="${this.toggleMenu}"
+                              >
+                            <div class="flex items-center gap-1 text-md font-bold">
+                              <span class="sr-only">Toggle dashboard menu</span>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="size-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="2"
+                              >
+                                <path
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  d="M4 6h16M4 12h16M4 18h16"
+                                />
+                              </svg>
+                              <p>Categorias</p>
+                            </div>
+                          </button>
+               </div>
+                 <div class="block md:hidden">
+                    <button
+                      class="rounded-sm bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"
+                      @click="${this.toggleMenu}">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="size-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M4 6h16M4 12h16M4 18h16"
+                        />
+                      </svg>
+                    </button>
+                 </div>
           </div>
         </div>
-      </header>
-    `;
-  }
-  private renderDropdown() {
-    return html`
-      <div class=" hidden md:relative  md:block">
-        <button
-          type="button"
-          class="overflow-hidden hover:bg-gray-100 rounded-sm bg-transparent py-1 px-2  cursor-pointer"
-          @click="${() => (this.showMenu = !this.showMenu)}"
-        >
-          <div class="flex items-center gap-1 text-md font-bold">
-            <span class="sr-only">Toggle dashboard menu</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="size-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-            <p>Categorias</p>
-          </div>
-        </button>
-
-        ${this.showMenu
+          
+         ${this.showMenu
           ? html`
               <div
                 class="absolute end-0 z-10 mt-0.5 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
@@ -123,7 +120,15 @@ export class Appheader extends LitElement {
               </div>
             `
           : null}
-      </div>
+      
+      </header>
     `;
   }
+
+    
+    
+   
+    
+  
 }
+//${() => (this.showMenu = !this.showMenu)}
