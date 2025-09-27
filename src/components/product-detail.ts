@@ -15,13 +15,14 @@ export class ProductDetail extends LitElement {
   @property({ type: Object }) category: any = null;
   @property({ type: Number }) productId = 0;
   private addToCart() {
+    console.log(this.pictures[0]);
     this.dispatchEvent(
       new CustomEvent("add-to-cart", {
         detail: {
           id: this.productId,
           name: this.title,
           price: this.price * 1000,
-          picture: this.pictures,
+          picture: `http://161.35.104.211:8000${this.pictures[0]}`,
         },
         bubbles: true, // <-- importante para que suba en el DOM
         composed: true,
