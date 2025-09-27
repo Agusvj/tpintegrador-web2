@@ -52,8 +52,8 @@ export class ProductCard extends LitElement {
               <span class="sr-only"> Regular Price </span>
               <span class="tracking-wider text-gray-800 font-bold text-xl">$ ${this.price} </span>
             </div>
-            <div class="h-[80px]  mt-2 flex flex-col gap-6  items-start">
-              <p class="flex-grow text-sm text-gray-800 ">${this.description}</p>
+            <div class="mt-2 flex flex-col gap-6  items-start h-25">
+              <p class="flex-grow  ">${this.description}</p>
             </div>
           
         </a>

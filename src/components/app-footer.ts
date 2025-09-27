@@ -133,7 +133,7 @@ export class AppFooter extends LitElement {
             <div class="lg:flex lg:items-start lg:gap-8 ">
             
 
-      <div class="mt-8 grid grid-cols-2 gap-8 lg:mt-0 lg:grid-cols-5 lg:gap-y-16">
+      <div class="mt-8 p-5 grid grid-cols-2 gap-8 lg:mt-0 lg:grid-cols-5 lg:gap-y-16">
         <div class="col-span-2">
           <div>
             <h2 class="text-2xl font-bold text-gray-900">¡Suscribite y recibí un decuento en tu próxima compra!</h2>
