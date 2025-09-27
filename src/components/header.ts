@@ -19,6 +19,9 @@ export class Appheader extends LitElement {
     this.categories = await getCategories();
     document.addEventListener("click", this.handleClickOutside);
 
+    const cantidad = localStorage.getItem("cant_total");
+    this.cartCount = cantidad ? parseInt(cantidad) : 0;
+
     window.addEventListener(
       "cart-count-changed",
       this.handleCartCountChanged as EventListener
