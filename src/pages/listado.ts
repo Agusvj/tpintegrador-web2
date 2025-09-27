@@ -24,8 +24,8 @@ export class Listado extends LitElement {
     if (this.error) {
       return html`<p class="p-4 text-red-500">${this.error}</p> `;
     }
-    if (!this.categories) {
-      return html`<p class="p-4 ">Cargando categorías...</p>`;
+    if (this.categories.length === 0) {
+      return html`<p class="p-4 text-center">⏳ Cargando categorías...</p>`;
     }
 
     return html`
