@@ -1,5 +1,12 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
+type CartItem = {
+  id: number;
+  name: string;
+  price: number;
+  picture: string;
+  quantity: number;
+};
 
 @customElement("carrito-comp")
 export class Carrito extends LitElement {
@@ -8,24 +15,91 @@ export class Carrito extends LitElement {
   }
   @state() isOpen = false;
   @state() cantTotal = 0;
-  @state() productos = [];
+  @state() productos: CartItem[] = [];
 
   private toggleSideBar() {
     this.isOpen = !this.isOpen;
   }
+  private addItem(item: CartItem) {
+    const existing = this.productos.find((i) => i.id === item.id);
+    if (existing) {
+      this.productos = this.productos.map((i) =>
+        i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+      );
+      this.cantTotal = this.cantTotal + 1;
+      localStorage.setItem("carrito", JSON.stringify(this.productos));
+      localStorage.setItem("cant_total", this.cantTotal.toString());
+    } else {
+      // Agregar nuevo
+      this.productos = [...this.productos, { ...item, quantity: 1 }];
+      this.cantTotal = this.cantTotal + 1;
+      localStorage.setItem("carrito", JSON.stringify(this.productos));
+      localStorage.setItem("cant_total", this.cantTotal.toString());
+    }
+  }
+  private removeItem(item: CartItem) {
+    const index = this.productos.findIndex((p) => p.id === item.id);
+    const product = this.productos[index];
+
+    if (product.quantity > 1) {
+      this.productos[index] = {
+        ...product,
+        quantity: product.quantity - 1,
+      };
+    } else {
+      this.productos.splice(index, 1);
+    }
+
+    this.cantTotal = this.cantTotal - 1;
+
+    localStorage.setItem("carrito", JSON.stringify(this.productos));
+    localStorage.setItem("cant_total", this.cantTotal.toString());
+  }
+  handleAddToCart(e: Event) {
+    const detail = (e as CustomEvent).detail;
+
+    this.addItem({ ...detail });
+  }
+  vaciarCarrito() {
+    this.productos = [];
+    this.cantTotal = 0;
+    localStorage.setItem("carrito", "");
+    localStorage.setItem("cant_total", "");
+  }
+  /* private boundHandleAddToCart = this.handleAddToCart.bind(this); */
+  connectedCallback(): void {
+    super.connectedCallback();
+    window.addEventListener("add-to-cart", this.handleAddToCart.bind(this));
+    this.productos = JSON.parse(
+      localStorage.getItem("carrito") || "[]"
+    ) as CartItem[];
+    const cantidad = localStorage.getItem("cant_total");
+    this.cantTotal = cantidad ? parseInt(cantidad) : 0;
+  }
+  disconnectedCallback() {
+    // Remove the listener when the component is removed from the DOM
+    window.removeEventListener("add-to-cart", this.handleAddToCart.bind(this));
+    super.disconnectedCallback();
+  }
   render() {
     return html`
-      <div class="z-51 justify-end fixed">
-        <button @click=${this.toggleSideBar} class=" cursor-pointer m-6">
+      <div
+        class="z-51 justify-end fixed m-6 hover:scale-110 hover:-rotate-4  transition duration-200  "
+      >
+        <button @click=${this.toggleSideBar} class=" cursor-pointer  block">
           <img
             src="src/svg/cart.svg"
-            class="h-12 shadow-lg bg-blue-500 hover:shadow-blue-600/50 hover:scale-110 hover:-rotate-4 p-1  transition duration-200 rounded-xl"
+            class="h-12 shadow-lg bg-blue-500 hover:shadow-blue-600/50 p-1 rounded-xl"
           />
-          <p class="absolute top-1 right-1">${this.cantTotal}</p>
+          <span
+            class="absolute bottom-0 right-0 font-bold inline-block w-5 h-5   text-white  bg-red-600 rounded-full "
+          >
+            ${this.cantTotal}
+          </span>
         </button>
       </div>
       <div
-        class=" fixed w-screen max-w-sm  border border-gray-600 z-51 bg-gray-100 px-4 py-8 sm:px-6 lg:px-8 transform transition-transform duration-300 ease-in-out ${this
+        class=" fixed w-screen max-w-sm shadow-2xl  z-51 bg-gray-200 px-4 py-8 sm:px-6 lg:px-8 transform transition-transform duration-300 ease-in-out ${this
           .isOpen
           ? "translate-x-0"
           : "translate-x-[100%]"}"
@@ -55,35 +129,69 @@ export class Carrito extends LitElement {
           </svg>
         </button>
 
-        <div class="mt-4 space-y-6">
-          <ul class="space-y-4">
-            <li class="flex items-center gap-4">
-              <img
-                src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=830&q=80"
-                alt=""
-                class="size-16 rounded-sm object-cover"
-              />
+        <div class="mt-4 space-y-6 flex flex-col  ">
+          ${this.productos.map(
+            (item) => html`
+              <li class="list-none   flex flex-row ">
+                <img
+                  src="${item.picture}"
+                  class="h-15 flex align-middle shadow-2xs rounded-full"
+                />
+                <div class="self-center  flex flex-row">
+                  <p class="px-2">${item.name}</p>
 
-              <div>
-                <h3 class="text-sm text-gray-900">NOMBRE PRODUCTO</h3>
+                  <p class="px-2 font-bold ">X${item.quantity}</p>
 
-                <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
-                  <div>
-                    <p>PRECIO</p>
-                    <p>CANTIDAD</p>
+                  <p class="font-bold text-green-500">
+                    $${item.price * item.quantity}
+                  </p>
+                  <div class="flex  px-4 gap-2">
+                    <button
+                      @click=${() =>
+                        this.addItem({
+                          id: item.id,
+                          name: item.name,
+                          price: item.price,
+                          picture: item.picture,
+                          quantity: item.quantity,
+                        } as CartItem)}
+                      class="font-bold  inline-flex items-center  justify-center bg-blue-500 rounded-full h-5 w-5  text-center cursor-pointer transition-all hover:scale-110 "
+                    >
+                      +
+                    </button>
+                    <button
+                      @click=${() =>
+                        this.removeItem({
+                          id: item.id,
+                          name: item.name,
+                          price: item.price,
+                          picture: item.picture,
+                          quantity: item.quantity,
+                        } as CartItem)}
+                      class="font-bold  inline-flex items-center  justify-center bg-blue-500 rounded-full h-5 w-5  text-center cursor-pointer  transition-all hover:scale-110 "
+                    >
+                      -
+                    </button>
                   </div>
-                </dl>
-              </div>
-            </li>
-          </ul>
+                </div>
+              </li>
+            `
+          )}
 
-          <div class="space-y-4 text-center">
-            <a
+          <div class="space-y-4 text-center ">
+            <button
               href="#"
-              class="block rounded-sm bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600"
+              class=" inline rounded-sm bg-green-500 px-5 py-3 text-sm text-gray-100 transition  hover:bg-green-600 cursor-pointer"
             >
-              Checkout
-            </a>
+              Finalizar Compra
+            </button>
+            <button
+              @click=${this.vaciarCarrito}
+              href="#"
+              class="inline rounded-sm bg-red-500 px-5 py-3 text-sm text-gray-100 transition  hover:bg-red-600 cursor-pointer"
+            >
+              Vaciar Carrito
+            </button>
           </div>
         </div>
       </div>

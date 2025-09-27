@@ -34,7 +34,7 @@ export class Product_List extends LitElement {
                 <product-card
                   .title="${producto.title}"
                   .picture="http://161.35.104.211:8000${producto.pictures[0]}"
-                  .price="$${producto.price * 1000}"
+                  .price="${producto.price * 1000}"
                   .description="${producto.description}"
                    .productId=${producto.id}
                 ></product-card>
@@ -69,7 +69,7 @@ export class Product_List extends LitElement {
                 <product-card
                   .title="${producto.title}"
                   .picture="http://161.35.104.211:8000${producto.pictures[0]}"
-                  .price="$${producto.price * 1000}"
+                  .price="${producto.price * 1000}"
                   .description="${producto.description}"
                 ></product-card>
               </ul>
