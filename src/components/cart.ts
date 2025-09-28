@@ -43,26 +43,23 @@ export class Carrito extends LitElement {
   }
 
   private removeItem(item: CartItem) {
-    const index = this.productos.findIndex((p) => p.id === item.id);
-    const product = this.productos[index];
+      this.productos = this.productos
+      .map((p) =>
+        p.id === item.id ? { ...p, quantity: p.quantity - 1 } : p
+      )
+      .filter((p) => p.quantity > 0);
 
-    if (product.quantity > 1) {
-      this.productos[index] = {
-        ...product,
-        quantity: product.quantity - 1,
-      };
-    } else {
-      this.productos.splice(index, 1);
-    }
+    this.cantTotal = this.productos.reduce((acc, i) => acc + i.quantity, 0);
 
-    this.cantTotal = this.cantTotal - 1;
     localStorage.setItem("carrito", JSON.stringify(this.productos));
     localStorage.setItem("cant_total", this.cantTotal.toString());
+
     window.dispatchEvent(
       new CustomEvent("cart-count-changed", {
         detail: { count: this.cantTotal },
       })
     );
+  
   }
 
   handleAddToCart(e: Event) {
