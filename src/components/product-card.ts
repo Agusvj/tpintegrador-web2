@@ -61,8 +61,7 @@ export class ProductCard extends LitElement {
           <a
             class="flex-1 text-grow "
             href="http://localhost:5173/ficha.html?product-id=${this.productId}"
-            >Ver mas</a
-          >
+            >Ver mas</a>
 
           <a
             @click=${this.addToCart}
