@@ -78,7 +78,7 @@ export class Appheader extends LitElement {
             >
               <a href="/">
                 <span class="sr-only">Home</span>
-                <img src="./src/svg/logo.png" class="max-h-20" />
+                <img src="./src/svg/logo.png" class="max-h-20 max-w-48" />
               </a>
             </div>
 
