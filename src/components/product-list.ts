@@ -18,13 +18,13 @@ export class Product_List extends LitElement {
     if (this.cat_id == "") {
       return html`
       <section>
-        <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+        <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 bg-gray-100">
           <header>
             <h2 class="text-xl font-bold text-gray-900 sm:text-3xl">
               Productos
             </h2>
           </header>
-          <ul class="mt-8 grid gap-4 sm:grid-cols-2 p lg:grid-cols-6 ">
+          <ul class="mt-8 grid gap-4 sm:grid-cols-3 p lg:grid-cols-6 ">
           
           ${this.products.map((producto: Product) => {
             return html`

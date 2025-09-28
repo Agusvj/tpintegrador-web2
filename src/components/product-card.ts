@@ -26,31 +26,38 @@ export class ProductCard extends LitElement {
 
   render() {
     return html`
-      <li>
-        <a href="#" class="group block overflow-hidden">
+    <div class="sm:h-[480px] h-[300px] grid grid-cols-2 sm:grid-cols-1 gap-4 rounded-xl bg-white shadow-md p-4 hover:shadow-lg transition">
+      
+        <div class="sm:h-[200px] h-[300px] overflow-hidden flex items-center justify-center py-6">
+         <a href="#" class="group block overflow-hidden  w-full h-full">
           <img
             src="${this.picture}"
             alt="${this.title}"
-            class="h-[350px] w-full object-contain transition duration-500 group-hover:scale-105 sm:h-[450px]"
+            class="object-contain max-h-full max-w-full min-h-[150px] min-w-[80px] m-auto"
+            
           />
-
-          <div class="relative bg-white pt-3">
+          </a>
+       </div>
+          <div>
+          <a href="#" class="group block overflow-hidden">
+          <div class="h-[40px]  relative bg-white pt-3">
             <h3
-              class="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4"
+              class="text-sm font-semibold text-gray-800 group-hover:underline group-hover:underline-offset-4"
             >
               ${this.title}
             </h3>
+            </div>
 
             <div class="mt-2 flex flex-col gap-6  items-start">
               <span class="sr-only"> Regular Price </span>
-              <span class="tracking-wider text-gray-900">$ ${this.price} </span>
+              <span class="tracking-wider text-gray-800 font-bold text-xl">$ ${this.price} </span>
             </div>
-            <div class="mt-2 flex flex-col gap-6  items-start h-15">
-              <p class="flex-grow  ">${this.description}</p>
+            <div class="h-[80px]  mt-2 flex flex-col gap-6  items-start">
+              <p class="flex-grow text-sm text-gray-800 ">${this.description}</p>
             </div>
-          </div>
+          
         </a>
-        <div class="mt-2 flex flex-row gap-4  m-3 items-center">
+        <div class=" mt-2 flex flex-row gap-4  m-3 items-center">
           <a
             class="flex-1 text-grow "
             href="http://localhost:5173/ficha.html?product-id=${this.productId}"
@@ -96,7 +103,9 @@ export class ProductCard extends LitElement {
             </svg>
           </a>
         </div>
-      </li>
+        </div>
+      
+      </div>
     `;
   }
   private addToCart() {
