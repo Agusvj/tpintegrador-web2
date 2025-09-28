@@ -28,14 +28,12 @@ export class Product_List extends LitElement {
           
           ${this.products.map((producto: Product) => {
             return html`
-        
-          ${console.log(producto)}
                 <product-card
                   .title="${producto.title}"
                   .picture="http://161.35.104.211:8000${producto.pictures[0]}"
                   .price="${producto.price * 1000}"
                   .description="${producto.description}"
-                   .productId=${producto.id}
+                  .productId=${producto.id}
                 ></product-card>
               </ul>
             </div>
@@ -47,7 +45,6 @@ export class Product_List extends LitElement {
     `;
     } else {
       const filteredProducts = this.products.filter((prod) => {
-        console.log(this.cat_id, prod.category_id);
         return this.cat_id == prod.category_id;
       });
 
@@ -63,13 +60,12 @@ export class Product_List extends LitElement {
           
           ${filteredProducts.map((producto: Product) => {
             return html`
-        
-          ${console.log(producto)}
                 <product-card
                   .title="${producto.title}"
                   .picture="http://161.35.104.211:8000${producto.pictures[0]}"
                   .price="${producto.price * 1000}"
                   .description="${producto.description}"
+                  .productId=${producto.id}
                 ></product-card>
               </ul>
             </div>

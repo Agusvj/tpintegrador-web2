@@ -67,14 +67,18 @@ export class Appheader extends LitElement {
 
   render() {
     return html`
-      <header class="bg-gradient-to-t from-blue-800 via-blue-700 to-blue-50 sticky top-0 z-50">
+      <header
+        class="bg-gradient-to-t from-blue-800 via-blue-700 to-blue-50 sticky top-0 z-50"
+      >
         <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div class="flex h-20 items-center justify-between">
             <!-- Logo -->
-            <div class="pt-10 flex-1 md:flex md:items-center md:gap-12">
-              <a class="block text-teal-600" href="/">
+            <div
+              class="flex-1 md:flex md:items-center md:gap-12 max-h-20 items-center"
+            >
+              <a href="/">
                 <span class="sr-only">Home</span>
-                <img src="./src/svg/logo.png" class="w-100">
+                <img src="./src/svg/logo.png" class="max-h-20" />
               </a>
             </div>
 

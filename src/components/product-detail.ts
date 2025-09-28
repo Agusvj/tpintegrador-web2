@@ -15,7 +15,6 @@ export class ProductDetail extends LitElement {
   @property({ type: Object }) category: any = null;
   @property({ type: Number }) productId = 0;
   private addToCart() {
-    console.log(this.pictures[0]);
     this.dispatchEvent(
       new CustomEvent("add-to-cart", {
         detail: {
@@ -42,8 +41,8 @@ export class ProductDetail extends LitElement {
               <li>
                 <div class="flex items-center">
                   <a
-                    href="http://localhost:5173/listado.html?category-id=${this
-                      .category.id}"
+                    href="http://localhost:5173/listado.html?cat=${this.category
+                      .id}"
                     class="mr-2 text-sm font-medium text-gray-900"
                     >${this.category.title}</a
                   >
@@ -63,9 +62,9 @@ export class ProductDetail extends LitElement {
               </li>
               <li>
                 <div class="flex items-center">
-                  <a href="#" class="mr-2 text-sm font-medium text-gray-900"
-                    >${this.title}</a
-                  >
+                  <p class="mr-2 text-sm font-medium text-gray-900">
+                    ${this.title}
+                  </p>
                   <svg
                     viewBox="0 0 16 20"
                     width="16"
