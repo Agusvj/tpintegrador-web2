@@ -152,61 +152,71 @@ export class Carrito extends LitElement {
             <div
               class="mt-4 space-y-6 flex flex-col overflow-y-auto overflow-x-hidden max-h-8/12"
             >
-              ${this.productos.map(
-                (item) => html`
-                  <li class="list-none flex flex-row text-white">
-                    <img
-                      src="${item.picture}"
-                      class="h-12 flex align-middle shadow-2xs rounded-full"
-                    />
-                    <div class="self-center grid grid-cols-4 justify-between items-center w-full max-w-full">
-                      <p class="text-sm col-span-2 mx-2">${item.name}</p>
-
-                      <div>
-                      <p class="font-bold text-sm col-span-1">X${
-                        item.quantity
-                      }</p>
-                      
-                      <p class="font-bold text-green-500 text-sm col-span-1">
-                      $${item.price * item.quantity}
-                      </p>
-                      </div>
-
-                      <div class="flex items-center gap-1 col-span-1">
-                        <button
-                          type="button"
-                          @click=${() =>
-                            this.removeItem({
-                              id: item.id,
-                              name: item.name,
-                              price: item.price,
-                              picture: item.picture,
-                              quantity: item.quantity,
-                            } as CartItem)}
-                          class="size-10 leading-10 text-white transition hover:opacity-75"
+              ${this.productos.length === 0
+                ? html`<p class="text-white text-center">
+                    No hay productos en el carrito
+                  </p>`
+                : this.productos.map(
+                    (item) => html`
+                      <li class="list-none flex flex-row text-white">
+                        <img
+                          src="${item.picture}"
+                          class="h-12 flex align-middle shadow-2xs rounded-full"
+                        />
+                        <div
+                          class="self-center grid grid-cols-4 justify-between items-center w-full max-w-full"
                         >
-                          &minus;
-                        </button>
+                          <p class="text-sm col-span-2 mx-2">${item.name}</p>
 
-                        <button
-                          type="button"
-                          @click=${() =>
-                            this.addItem({
-                              id: item.id,
-                              name: item.name,
-                              price: item.price,
-                              picture: item.picture,
-                              quantity: item.quantity,
-                            } as CartItem)}
-                          class="size-10 leading-10 text-white transition hover:opacity-75"
-                        >
-                          &plus;
-                        </button>
-                      </div>            
-                  </li>
-                `
-              )}
+                          <div>
+                            <p class="font-bold text-sm col-span-1">
+                              X${item.quantity}
+                            </p>
+
+                            <p
+                              class="font-bold text-green-500 text-sm col-span-1"
+                            >
+                              $${item.price * item.quantity}
+                            </p>
+                          </div>
+
+                          <div class="flex items-center gap-1 col-span-1">
+                            <button
+                              type="button"
+                              @click=${() =>
+                                this.removeItem({
+                                  id: item.id,
+                                  name: item.name,
+                                  price: item.price,
+                                  picture: item.picture,
+                                  quantity: item.quantity,
+                                } as CartItem)}
+                              class="size-10 leading-10 text-white transition hover:opacity-75"
+                            >
+                              &minus;
+                            </button>
+
+                            <button
+                              type="button"
+                              @click=${() =>
+                                this.addItem({
+                                  id: item.id,
+                                  name: item.name,
+                                  price: item.price,
+                                  picture: item.picture,
+                                  quantity: item.quantity,
+                                } as CartItem)}
+                              class="size-10 leading-10 text-white transition hover:opacity-75"
+                            >
+                              &plus;
+                            </button>
+                          </div>
+                        </div>
+                      </li>
+                    `
+                  )}
             </div>
+
             <hr class="text-white my-4" />
             <div class="mb-4">
               <span class="font-bold text-white"

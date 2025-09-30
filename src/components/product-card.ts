@@ -41,8 +41,10 @@ export class ProductCard extends LitElement {
           </a>
         </div>
         <div>
-          <a href="http://localhost:5173/ficha.html?product-id=${this
-                .productId}" class="group block overflow-hidden">
+          <a
+            href="http://localhost:5173/ficha.html?product-id=${this.productId}"
+            class="group block overflow-hidden"
+          >
             <div class="h-[40px]  relative bg-white pt-3">
               <h3
                 class="text-sm font-semibold text-gray-800 group-hover:underline group-hover:underline-offset-4"
@@ -50,21 +52,21 @@ export class ProductCard extends LitElement {
                 ${this.title}
               </h3>
             </div>
-            </a>
+          </a>
 
-            <div class="mt-2 flex flex-col gap-6  items-start">
-              <span class="sr-only"> Regular Price </span>
-              <span class="tracking-wider text-gray-800 font-bold text-xl"
-                >$ ${this.price}
-              </span>
-            </div>
-            <div class="mt-2 flex flex-col gap-6  items-start h-25">
-              <p class="flex-grow  ">${this.description}</p>
-            </div>
-          
-          <div class=" mt-2 flex flex-row gap-4  m-3 items-center">
+          <div class="mt-2 flex flex-col gap-6  items-start">
+            <span class="sr-only"> Regular Price </span>
+            <span class="tracking-wider text-gray-800 font-bold text-xl"
+              >$ ${this.price}
+            </span>
+          </div>
+          <div class="mt-2 flex flex-col gap-6  items-start h-20">
+            <p class="flex-grow  ">${this.description}</p>
+          </div>
+
+          <div class="mt-2 flex flex-row gap-4  m-3 items-center">
             <a
-              class="flex-1 text-grow "
+              class="flex-1 text-grow hover:underline "
               href="http://localhost:5173/ficha.html?product-id=${this
                 .productId}"
               >Ver mas</a
