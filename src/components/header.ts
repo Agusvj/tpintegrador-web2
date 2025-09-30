@@ -168,8 +168,8 @@ export class Appheader extends LitElement {
                 <nav class="flex flex-col p-4 space-y-2">
                   ${this.categories?.map(
                     (cat: any) => html`
-                      <a
-                        href="#"
+                      <a 
+                        href="http://localhost:5173/listado.html?cat=${cat.id}"
                         class="block rounded-lg px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
                         ${cat.title}
@@ -187,4 +187,4 @@ export class Appheader extends LitElement {
     `;
   }
 }
-//${() => (this.showMenu = !this.showMenu)}
+

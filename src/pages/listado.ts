@@ -29,7 +29,7 @@ export class Listado extends LitElement {
     }
 
     return html`
-      <div class=" flex  flex-wrap items-center justify-center ">
+      <div class=" flex  flex-wrap items-center justify-center class="bg-gray-200"">
         <cat-list .categorias=${this.categories}></cat-list>
         <product-list .products=${this.products}> </product-list>
       </div>
