@@ -23,13 +23,14 @@ export class Categories_List extends LitElement {
           </header>
           ${this.categorias.map((cat) => {
             return html`
+            
          
               <a
                 class="inline-block rounded-sm bg-indigo-600 px-8 py-3 mx-5 text-sm font-medium text-white transition hover:scale-110 hover:shadow-xl focus:ring-3 focus:outline-hidden"
                 href="http://localhost:5173/listado.html?cat=${cat.id}"
               >
                 ${cat.title}
-              </button>
+              
             </div>
           </section>
         `;
