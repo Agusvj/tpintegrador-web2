@@ -114,10 +114,24 @@ export class Product_List extends LitElement {
       </section>
     `;
     } else {
-      const filteredProducts = this.products.filter((prod) => {
-        return this.tag_id == prod.tags[0].id;
+      const taggedProducts = this.products.filter((prod) => {
+        return prod.tags?.length;
       });
 
+      const filteredProducts = taggedProducts.filter((prod) => {
+        console.log(prod.tags?.[0].id);
+        if (prod.tags?.length == 1) {
+          return this.tag_id == prod.tags?.[0].id;
+        }
+        if (prod.tags?.length > 1) {
+          return (
+            this.tag_id == prod.tags?.[0].id || this.tag_id == prod.tags?.[1].id
+          );
+        }
+      });
+
+      console.log(this.tag_id);
+      console.log(filteredProducts);
       return html`
       <section>
         <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
@@ -151,13 +165,13 @@ export class Product_List extends LitElement {
   render() {
     const page = window.location.pathname;
 
-    if (page == "/" || "index.html") {
+    if (page == "/" || page.endsWith("index.html")) {
       console.log("dentro del if de tags");
-      this.renderByTag();
+      return this.renderByTag();
     }
     if (page == "/listado.html") {
       console.log("dentro del if de categorias");
-      this.renderByCat();
+      return this.renderByCat();
     }
     return html``;
   }

@@ -10,6 +10,9 @@ export class Tags_List extends LitElement {
   @property({ type: Array }) tags: Tags[] = [];
 
   render() {
+    if (!this.tags) {
+      return html`<p class="p-4 ">Cargando...</p>`;
+    }
     return html`
       <section class=" flex  flex-wrap items-center justify-center">
         <div
@@ -36,6 +39,12 @@ export class Tags_List extends LitElement {
           </section>
         `;
           })}
+          <a
+                class="inline-block rounded-sm bg-indigo-600 px-8 py-3 mx-5 text-sm font-medium text-white transition hover:scale-110 hover:shadow-xl focus:ring-3 focus:outline-hidden"
+                href="http://localhost:5173/index.html"
+              >
+                Mostrar Todo
+              </a>
         </div>
       </section>
     </div> `;

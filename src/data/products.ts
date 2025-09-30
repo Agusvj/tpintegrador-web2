@@ -40,10 +40,10 @@ export interface Product {
   description: string;
   id: string;
   category_id: string;
-  tags: [
+  tags?: [
     {
-      title?: string;
-      id?: string;
+      title: string;
+      id: string;
     }
   ];
 }
