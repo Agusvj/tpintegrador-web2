@@ -2,6 +2,8 @@ import { LitElement, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import "../components/product-detail";
 import { getProductByID } from "../data/products";
+import "../components/app-footer";
+import "../components/header";
 
 @customElement("ficha-page")
 export class ProductPage extends LitElement {
@@ -45,6 +47,7 @@ export class ProductPage extends LitElement {
           .category=${this.product.category}
         ></product-detail>
       </main>
+      <app-footer></app-footer>
     `;
   }
 }
