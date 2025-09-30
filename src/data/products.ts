@@ -40,5 +40,11 @@ export interface Product {
   description: string;
   id: string;
   category_id: string;
+  tags: [
+    {
+      title?: string;
+      id?: string;
+    }
+  ];
 }
 export { getProducts, getProductByID };
