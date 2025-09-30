@@ -32,7 +32,9 @@ export class HomePage extends LitElement {
 
     return html`
       <app-header></app-header>
+      <div class=" flex  flex-wrap items-center justify-center class="bg-gray-200"">
       <tags-list .tags=${this.tags}></tags-list>
+      </div>
       <product-list .products=${this.products}></product-list>
       <app-footer></app-footer>
     `;
