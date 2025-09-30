@@ -68,18 +68,18 @@ export class ProductCard extends LitElement {
               >Ver mas</a
             >
 
-            <a
+            <button
               @click=${this.addToCart}
               class=" inline-flex items-center  rounded-full border border-indigo-600 p-3  text-indigo-600 hover:bg-indigo-300 hover:text-white focus:ring-3 focus:outline-hidden cursor-pointer"
             >
-              <span class="sr-only"> Download </span>
+              <span class="sr-only"> Add To Cart </span>
 
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 version="1.1"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 viewBox="0 0 32 32"
-                class="w-8 h-8"
+                class="w-5 h-5"
               >
                 <g>
                   <g
@@ -105,7 +105,7 @@ export class ProductCard extends LitElement {
                   </g>
                 </g>
               </svg>
-            </a>
+            </button>
           </div>
         </div>
       </div>

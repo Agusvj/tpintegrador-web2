@@ -24,7 +24,7 @@ export class Product_List extends LitElement {
               Productos
             </h2>
           </header>
-          <ul class="mt-8 grid gap-4 sm:grid-cols-3 p lg:grid-cols-6 ">
+          <ul class="mt-8 grid gap-4 sm:grid-cols-3 p lg:grid-cols-4 ">
           
           ${this.products.map((producto: Product) => {
             return html`

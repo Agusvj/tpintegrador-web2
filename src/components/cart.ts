@@ -43,10 +43,8 @@ export class Carrito extends LitElement {
   }
 
   private removeItem(item: CartItem) {
-      this.productos = this.productos
-      .map((p) =>
-        p.id === item.id ? { ...p, quantity: p.quantity - 1 } : p
-      )
+    this.productos = this.productos
+      .map((p) => (p.id === item.id ? { ...p, quantity: p.quantity - 1 } : p))
       .filter((p) => p.quantity > 0);
 
     this.cantTotal = this.productos.reduce((acc, i) => acc + i.quantity, 0);
@@ -59,7 +57,6 @@ export class Carrito extends LitElement {
         detail: { count: this.cantTotal },
       })
     );
-  
   }
 
   handleAddToCart(e: Event) {
@@ -124,14 +121,14 @@ export class Carrito extends LitElement {
     return this.isOpen
       ? html`
           <div
-            class="fixed w-screen max-w-sm shadow-2xl z-51 bg-gray-200 px-4 py-8 sm:px-6 lg:px-8 right-0 top-0 h-full transform transition-transform duration-300 ease-in-out"
+            class="fixed w-screen max-w-full sm:max-w-sm shadow-2xl z-51 bg-gray-500 px-4 py-8 sm:px-6 lg:px-8 right-0 top-0 h-full transform transition-transform duration-300 ease-in-out max-h-screen"
             aria-modal="true"
             role="dialog"
             tabindex="-1"
           >
             <button
               @click=${this.closeCart}
-              class="absolute end-4 top-4 text-gray-600 transition-all hover:scale-110 cursor-pointer"
+              class="absolute end-4 top-4 text-white transition-all hover:scale-110 cursor-pointer"
             >
               <span class="sr-only">Close cart</span>
               <svg
@@ -150,37 +147,34 @@ export class Carrito extends LitElement {
               </svg>
             </button>
 
-            <div class="mt-4 space-y-6 flex flex-col  ">
+            <p class="font-bold text-white">Lista de Productos:</p>
+            <hr class="text-white mt-4" />
+            <div
+              class="mt-4 space-y-6 flex flex-col overflow-y-auto overflow-x-hidden max-h-8/12"
+            >
               ${this.productos.map(
                 (item) => html`
-                  <li class="list-none   flex flex-row ">
+                  <li class="list-none flex flex-row text-white">
                     <img
                       src="${item.picture}"
-                      class="h-15 flex align-middle shadow-2xs rounded-full"
+                      class="h-12 flex align-middle shadow-2xs rounded-full"
                     />
-                    <div class="self-center  flex flex-row">
-                      <p class="px-2">${item.name}</p>
+                    <div class="self-center grid grid-cols-4 justify-between items-center w-full max-w-full">
+                      <p class="text-sm col-span-2 mx-2">${item.name}</p>
 
-                      <p class="px-2 font-bold ">X${item.quantity}</p>
-
-                      <p class="font-bold text-green-500">
-                        $${item.price * item.quantity}
+                      <div>
+                      <p class="font-bold text-sm col-span-1">X${
+                        item.quantity
+                      }</p>
+                      
+                      <p class="font-bold text-green-500 text-sm col-span-1">
+                      $${item.price * item.quantity}
                       </p>
-                      <div class="flex  px-4 gap-2">
+                      </div>
+
+                      <div class="flex items-center gap-1 col-span-1">
                         <button
-                          @click=${() =>
-                            this.addItem({
-                              id: item.id,
-                              name: item.name,
-                              price: item.price,
-                              picture: item.picture,
-                              quantity: item.quantity,
-                            } as CartItem)}
-                          class="font-bold  inline-flex items-center  justify-center bg-blue-500 rounded-full h-5 w-5  text-center cursor-pointer transition-all hover:scale-110 "
-                        >
-                          +
-                        </button>
-                        <button
+                          type="button"
                           @click=${() =>
                             this.removeItem({
                               id: item.id,
@@ -189,38 +183,52 @@ export class Carrito extends LitElement {
                               picture: item.picture,
                               quantity: item.quantity,
                             } as CartItem)}
-                          class="font-bold  inline-flex items-center  justify-center bg-blue-500 rounded-full h-5 w-5  text-center cursor-pointer  transition-all hover:scale-110 "
+                          class="size-10 leading-10 text-white transition hover:opacity-75"
                         >
-                          -
+                          &minus;
                         </button>
-                      </div>
-                    </div>
+
+                        <button
+                          type="button"
+                          @click=${() =>
+                            this.addItem({
+                              id: item.id,
+                              name: item.name,
+                              price: item.price,
+                              picture: item.picture,
+                              quantity: item.quantity,
+                            } as CartItem)}
+                          class="size-10 leading-10 text-white transition hover:opacity-75"
+                        >
+                          &plus;
+                        </button>
+                      </div>            
                   </li>
                 `
               )}
-              <div>
-                <span class="font-bold"
-                  >Valor Total:<span class="text-green-500 font-bold">
-                    $${this.calcValorTotal()}</span
-                  ></span
-                >
-              </div>
-
-              <div class="space-y-4 text-center">
-                <button
-                  href="#"
-                  class="inline rounded-sm bg-green-500 px-5 py-3 text-sm text-gray-100 transition hover:bg-green-600 cursor-pointer"
-                >
-                  Finalizar Compra
-                </button>
-                <button
-                  @click=${this.vaciarCarrito}
-                  href="#"
-                  class="inline rounded-sm bg-red-500 px-5 py-3 text-sm text-gray-100 transition hover:bg-red-600 cursor-pointer"
-                >
-                  Vaciar Carrito
-                </button>
-              </div>
+            </div>
+            <hr class="text-white my-4" />
+            <div class="mb-4">
+              <span class="font-bold text-white"
+                >Valor Total:<span class="text-green-500 font-bold">
+                  $${this.calcValorTotal()}</span
+                ></span
+              >
+            </div>
+            <div class="space-y-4 text-center">
+              <button
+                href="#"
+                class="inline rounded-sm bg-green-500 px-5 py-3 text-sm text-gray-100 transition hover:bg-green-600 cursor-pointer"
+              >
+                Finalizar Compra
+              </button>
+              <button
+                @click=${this.vaciarCarrito}
+                href="#"
+                class="inline rounded-sm bg-red-500 px-5 py-3 text-sm text-gray-100 transition hover:bg-red-600 cursor-pointer"
+              >
+                Vaciar Carrito
+              </button>
             </div>
           </div>
         `
