@@ -20,7 +20,7 @@ export class Categories_List extends LitElement {
             <h2
               class="text-xl text-center py-8 font-bold text-gray-900 sm:text-3xl"
             >
-              Buscá por categorias
+              Buscá por categorías
             </h2>
           </header>
           ${this.categorias.map((cat) => {
